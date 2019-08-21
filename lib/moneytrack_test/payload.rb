@@ -1,11 +1,22 @@
 require "msgpack"
 require "digest"
 
-payload = {
-		"hello" => "world",
-		"key" => "value"
-}
+module MoneytrackTest
+	class Playload
 
-serialized = payload.to_msgpack
+		@payload = {
+			"hello" => "world",
+			"key" => "value"
+		}
 
-signature = Digest::SHA256.hexdigest(serialized)
+		def to_serialize()
+			@serialized_payload = @payload.to_msgpack
+		end
+
+		def to_sign()
+			@signature = Digest::SHA256.hexdigest(@serialized_payload)
+		end
+
+	end
+
+end
