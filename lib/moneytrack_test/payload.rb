@@ -3,21 +3,13 @@ require 'digest'
 
 module MoneytrackTest
 	class Payload
-		attr :payload, :serialized_payload, :signature
 
-		def initialize
-			@payload = {
-				"hello" => "world",
-				"key" => "value"
-			}
+		def self.to_serialize(payload)
+			payload.to_msgpack
 		end
 
-		def to_serialize
-			@serialized_payload = @payload.to_msgpack
-		end
-
-		def to_sign
-			@signature = Digest::SHA256.hexdigest(@serialized_payload)
+		def self.to_sign(payload)
+			Digest::SHA256.hexdigest(to_serialize(payload))
 		end
 
 	end
