@@ -5,7 +5,7 @@ module MoneytrackTest
 	class Block
 		attr :block ,:signature, :header
 
-		def initialize(given_payload, given_previous_block = nil, timestamp = Time.now.utc.iso8601)
+		def self.initialize(given_payload, given_previous_block = nil, timestamp = Time.now.utc.iso8601)
 			@header = {
 					:timestamp => timestamp,
 					:previous_block => given_previous_block,
@@ -13,6 +13,7 @@ module MoneytrackTest
 			}
 
 			@signature = MoneytrackTest::Payload.to_sign(@header)
+
 			@block = {
 				:signature => @signature,
 				:header => @header,

@@ -5,11 +5,11 @@ module MoneytrackTest
 	class Blockchain
 		attr :blockchain
 
-		def initialize(initial_payload)
-			@blockchain = [Block.new initial_payload]
+		def self.initialize(initial_payload)
+			@blockchain = Array.new(Block.new(initial_payload))
 		end
 
-		def add_block(new_payload)
+		def self.add_block(new_payload)
 			@blockchain.push(Block.new(new_payload, @blockchain.last.signature))
 		end
 	end
