@@ -3,14 +3,15 @@ require 'moneytrack_test/block'
 
 module MoneytrackTest
 	class Blockchain
-		attr :blockchain
+		attr :blockchain, :last_last_signature
 
 		def self.initialize(initial_payload)
-			@blockchain = Array.new(Block.new(initial_payload))
+			@blockchain = Array.new(MoneytrackTest::Blocks.new(initial_payload))
 		end
 
-		def self.add_block(new_payload)
-			@blockchain.push(Block.new(new_payload, @blockchain.last.signature))
+		def self.add_blocks(new_payload)
+			@last_last_signature  = @blockchain.last(@blocks.last.signature)
+			@blockchain.push(MoneytrackTest::Blocks.new(new_payload, @last_last_signature)
 		end
 	end
 end
