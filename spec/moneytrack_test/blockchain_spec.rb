@@ -21,23 +21,22 @@ RSpec.describe MoneytrackTest::Payload do
 		block1_signature = MoneytrackTest::Payload.to_sign(block1_header)
 		blockchain = MoneytrackTest::Blockchain.new payload1
 		payload2 = {hello: "world", key2: "value2"}
-		block2 = MoneytrackTest::Block.new(payload2, block1_signature)
-		blockchain.push(block2)
+		blockchain.add_block(payload2)
 
 		it "generates the payload1 s signature" do
 			expect(payload1_signature).to eq "3a87af5e8ceb519b74e02a2cfde90a12faa34f0f9142b033e5338acab58b18e5"
 		end
 		
 		it "generates the first block with previous_block to nil" do
-			expect(block1.header.previous_block).to be_nil
+			expect(block1.header[:previous_block]).to be_nil
 		end
 
 		it "generates the block1 s signature" do	
-			expect(blockchain.first.signature).to eq(block1_signature)
+			expect(blockchain.blockchain.first.signature).to eq(block1_signature)
 		end
 
 		it "generates the second block with previous_block to equale block1 s signature" do
-			expect(blockchain.last.header.previous_block).to eq(block1_signature)
+			expect(blockchain.blockchain.last.get_previous_block).to eq(block1_signature)
 		end
 	end
 end

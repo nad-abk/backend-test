@@ -3,9 +3,9 @@ require 'moneytrack_test/payload'
 
 module MoneytrackTest
 	class Block
-		attr :block ,:signature, :header
+		attr :payload ,:signature, :header
 
-		def self.initialize(given_payload, given_previous_block = nil, timestamp = Time.now.utc.iso8601)
+		def initialize(given_payload, given_previous_block = nil, timestamp = Time.now.utc.iso8601)
 			@header = {
 					:timestamp => timestamp,
 					:previous_block => given_previous_block,
@@ -14,11 +14,11 @@ module MoneytrackTest
 
 			@signature = MoneytrackTest::Payload.to_sign(@header)
 
-			@block = {
-				:signature => @signature,
-				:header => @header,
-				:payload => given_payload
-			}
+			@payload = given_payload
+		end
+
+		def get_previous_block
+			@header[:previous_block]
 		end
 	end
 end
