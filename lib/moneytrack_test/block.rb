@@ -2,30 +2,23 @@ require 'time'
 require 'moneytrack_test/payload'
 
 module MoneytrackTest
-	class Blocks
-		attr :blocks, :block ,:signature, :header
+	class Block
+		attr :payload ,:signature, :header
 
-		def self.initialize(given_payloads, given_previous_block = nil, timestamp = nil)
-			timestamp = Time.now.utc.iso8601
-			@blocks = Array.new
-			given_payloads.each do given_payload
-				@header = {
-						:timestamp => timestamp,
-						:previous_block => given_previous_block,
-						:payload_signature => MoneytrackTest::Payload.to_sign(given_payload)
-				}
+		def initialize(given_payload, given_previous_block = nil, timestamp = Time.now.utc.iso8601)
+			@header = {
+					:timestamp => timestamp,
+					:previous_block => given_previous_block,
+					:payload_signature => MoneytrackTest::Payload.to_sign(given_payload)
+			}
 
-				@signature = MoneytrackTest::Payload.to_sign(@header)
+			@signature = MoneytrackTest::Payload.to_sign(@header)
 
-				@block = {
-					:signature => @signature,
-					:header => @header,
-					:payload => given_payload
-				}
+			@payload = given_payload
+		end
 
-				@blocks.push(@block)
-				given_previous_block = @signature
-			end
+		def get_previous_block
+			@header[:previous_block]
 		end
 	end
 end

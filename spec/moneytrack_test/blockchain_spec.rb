@@ -1,19 +1,15 @@
-#un rspec test qui va balancer deux payload bien précis a la classe block et donc le premier sera le genesis et du coup on vérifie que "précédent" est vide et que le hash du payload corresponde au payload en faisant des "is equal to" et on appelle la donnée avec des "block[data][data]" simplement
-#avec les deux payload précédemment donnés, on crée une blockchain en appelant la classe blockchain mais il est possible de combiner les deux tests pour que ce soit plus facile et fluide
-#et un test qui ajoute un deuxieme block a la blockchain en verifiant donc les données ... du coup ce test pourrait englober les deux précédents et on est bon
-
 require 'spec_helper'
 require 'moneytrack_test/payload'
 require 'moneytrack_test/block'
 require 'moneytrack_test/blockchain'
 
 
-RSpec.describe MoneytrackTest::Payload do
+RSpec.describe MoneytrackTest::Blockchain do
 	context "adds blocks to the blockchain" do
 		payload1 = {hello: "world", key1: "value1"}
 		payload1_signature = MoneytrackTest::Payload.to_sign(payload1)
 
-		block1 = MoneytrackTest::Block.new(payload1)
+		block1 = Block.new(payload1)
 		block1_header = {
 					timestamp: Time.now.utc.iso8601,
 					previous_block: nil,
@@ -21,10 +17,10 @@ RSpec.describe MoneytrackTest::Payload do
 			}
 		block1_signature = MoneytrackTest::Payload.to_sign(block1_header)
 
-		blockchain = MoneytrackTest::Blockchain.new payload1
+		blockchain = Blockchain.new payload1
 
 		payload2 = {hello: "world", key2: "value2"}
-		block2 = MoneytrackTest::Block.new(payload2, block1_signature)
+		block2 = Block.new(payload2, block1_signature)
 		
 		blockchain.push(block2)
 
