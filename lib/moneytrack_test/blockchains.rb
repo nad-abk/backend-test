@@ -12,7 +12,7 @@ module MoneytrackTest
 
 		def add_blocks(new_payload)
 			@last_last_signature = @blockchains.last.last.signature
-			@blockchains.push(Blocks.new(new_payload, @last_last_signature, timestamp))
+			@blockchains.push(Blocks.new(new_payload, @last_last_signature))
 		end
 	end
 end

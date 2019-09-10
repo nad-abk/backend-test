@@ -1,5 +1,4 @@
-require 'time'
-require 'moneytrack_test/payload'
+require 'moneytrack_test/block'
 
 module MoneytrackTest
 	class Blocks

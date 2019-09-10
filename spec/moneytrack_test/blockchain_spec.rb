@@ -9,7 +9,7 @@ RSpec.describe MoneytrackTest::Blockchain do
 		payload1 = {hello: "world", key1: "value1"}
 		payload1_signature = MoneytrackTest::Payload.to_sign(payload1)
 
-		block1 = Block.new(payload1)
+		block1 = MoneytrackTest::Block.new(payload1)
 		block1_header = {
 					timestamp: Time.now.utc.iso8601,
 					previous_block: nil,
@@ -17,10 +17,10 @@ RSpec.describe MoneytrackTest::Blockchain do
 			}
 		block1_signature = MoneytrackTest::Payload.to_sign(block1_header)
 
-		blockchain = Blockchain.new payload1
+		blockchain = MoneytrackTest::Blockchain.new payload1
 
 		payload2 = {hello: "world", key2: "value2"}
-
+		
 		blockchain.add_block(payload2)
 
 		it "generates the payload1 s signature" do
