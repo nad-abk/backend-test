@@ -13,12 +13,10 @@ RSpec.describe MoneytrackTest::Blocks do
 					]
 
 		blocks = MoneytrackTest::Blocks.new(payloads)
-		first_timestamp = blocks.blocks.first.header[:timestamp]
 
 		it "checks that the timestamps are all equal in the same groupe of blocks" do
 			blocks.blocks.each do |block|
-				puts block.header[:timestamp]
-				expect {block.header[:timestamp]}.to eq first_timestamp
+				expect(block.header[:timestamp]).to eq blocks.blocks.first.header[:timestamp]
 			end
 		end
 	end
